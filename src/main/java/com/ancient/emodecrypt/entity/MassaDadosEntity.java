@@ -1,5 +1,6 @@
 package com.ancient.emodecrypt.entity;
 
+import com.ancient.emodecrypt.request.MassaDadosRequest;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,4 +27,5 @@ public class MassaDadosEntity {
     private String emocaoTransmitida;
     private Integer nivelSatisfacao;
     private Integer qtdCurtidas;
+
 }
