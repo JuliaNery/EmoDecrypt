@@ -1,36 +1,29 @@
 package com.ancient.emodecrypt.controller;
 
-import com.ancient.emodecrypt.entity.MassaDadosEntity;
-import com.ancient.emodecrypt.repository.MassaDadosRepository;
 import com.ancient.emodecrypt.request.MassaDadosRequest;
 import com.ancient.emodecrypt.service.MassaDadosService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
-import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("MassaDados")
+@RequestMapping("/MassaDados")
 public class MassaDadosController {
+
     @Autowired
     private MassaDadosService massaDadosService;
 
     @PostMapping
-    @Transactional
-    public ResponseEntity create(@RequestBody MassaDadosRequest massaDadosRequest,  UriComponentsBuilder uriBuilder){
-        var massaDados = MassaDadosEntity.builder()
-                                        .nome(massaDadosRequest.nome())
-                                        .comentario(massaDadosRequest.comentario())
-                                        .qtdCurtidas(massaDadosRequest.qtdCurtidas())
-                                        .build();
-        //massaDadosRepository.save(massaDados);
+    public ResponseEntity create(@RequestBody @Valid MassaDadosRequest massaDadosRequest,  UriComponentsBuilder uriBuilder) {
+        var massaDadosResponse = massaDadosService.create(massaDadosRequest);
+        var uri = uriBuilder.path("{id}").buildAndExpand(massaDadosResponse.id()).toUri();
+        return ResponseEntity.created(uri).body(massaDadosResponse);
+    }
 
-        var uri = uriBuilder.path("{id}").buildAndExpand(massaDados.getId()).toUri();
-
-        return ResponseEntity.ok().build();
+    @GetMapping("/{id}")
+    public ResponseEntity get(@PathVariable Long id){
+        return ResponseEntity.ok().body(massaDadosService.findById(id));
     }
 }
