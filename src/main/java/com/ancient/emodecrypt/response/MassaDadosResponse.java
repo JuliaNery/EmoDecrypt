@@ -16,8 +16,8 @@ public record MassaDadosResponse(
         String tipoMassa,
         String empresa
 ) {
-    public MassaDadosResponse(MassaDadosEntity massaDados) {
+    public MassaDadosResponse(MassaDadosEntity massaDados, List<String> emocoes) {
         this(massaDados.getId(), massaDados.getNome(), massaDados.getComentario(), massaDados.getPalavrasChaves(),
-                massaDados.getEmocaoTransmitida(), massaDados.getNivelSatisfacao(), massaDados.getQtdCurtidas(), massaDados.getPlataformaOrigem(), massaDados.getTipoMassa(), massaDados.getEmpresa());
+              emocoes,  massaDados.getNivelSatisfacao(), massaDados.getQtdCurtidas(), massaDados.getPlataformaOrigem(), massaDados.getTipoMassa(), massaDados.getEmpresa());
     }
 }
