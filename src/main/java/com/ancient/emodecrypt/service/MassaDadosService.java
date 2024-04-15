@@ -72,8 +72,6 @@ public class MassaDadosService {
 
     public MassaDadosResponse findById(Long id) {
         var optional = massaDadosRepository.findById(id);
-        if(optional.toString().isEmpty() || optional == null)
-            return null;
         var massaDados = MassaDadosEntity.builder()
                 .tipoMassa(optional.get().getTipoMassa())
                 .plataformaOrigem(optional.get().getPlataformaOrigem())
@@ -90,4 +88,10 @@ public class MassaDadosService {
         return new MassaDadosResponse(massaDados, emocoes);
     }
 
+    public List<MassaDadosResponse> findAll() {
+        List<MassaDadosEntity> massaDadosEntityList = massaDadosRepository.findAll();
+        List<MassaDadosResponse> massaDadosResponse = new ArrayList<>();
+        massaDadosEntityList.stream().map(m -> massaDadosResponse.add(new MassaDadosResponse(m,emocoesService.findAllById(m.getId())))).collect(Collectors.toList());
+        return massaDadosResponse;
+    }
 }

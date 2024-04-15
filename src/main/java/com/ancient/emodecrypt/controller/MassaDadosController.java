@@ -23,11 +23,22 @@ public class MassaDadosController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity get(@PathVariable Long id){
-        var massaDados = massaDadosService.findById(id);
-        System.out.println("TESTE: "+massaDados);
-        if (massaDados == null)
+    public ResponseEntity getById(@PathVariable Long id){
+        try{
+            return ResponseEntity.ok().body(massaDadosService.findById(id));
+        }catch (Exception e){
             return ResponseEntity.notFound().build();
-        return ResponseEntity.ok().body(massaDados);
+        }
+
+    }
+
+    @GetMapping
+    public ResponseEntity getAll(){
+        try{
+            return ResponseEntity.ok().body(massaDadosService.findAll());
+        }catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
+
     }
 }
