@@ -16,10 +16,6 @@ public class MassaDadosEmocaoService {
     @Autowired
     private MassaDadosEmocaoRepository massaDadosEmocaoRepository;
 
-    public List<MassaDadosEmocaoEntity> findByMassaDados(Long massaDados){
-       return massaDadosEmocaoRepository.findByMassaDados(massaDados);
-    }
-
     public void save(MassaDadosEntity idMassa, List<EmocoesEntity> emocao){
        List<MassaDadosEmocaoEntity> massaDadosEmocaoEntityList =  emocao
                .stream()
