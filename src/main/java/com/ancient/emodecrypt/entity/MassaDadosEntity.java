@@ -24,7 +24,6 @@ public class MassaDadosEntity {
     private String nome;
     private String comentario;
     private List<String> palavrasChaves;
-    //private List<String> emocaoTransmitida;
     private Integer nivelSatisfacao;
     private Integer qtdCurtidas;
     private String plataformaOrigem;

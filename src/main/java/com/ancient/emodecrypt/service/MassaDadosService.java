@@ -72,6 +72,8 @@ public class MassaDadosService {
 
     public MassaDadosResponse findById(Long id) {
         var optional = massaDadosRepository.findById(id);
+        if(optional.toString().isEmpty() || optional == null)
+            return null;
         var massaDados = MassaDadosEntity.builder()
                 .tipoMassa(optional.get().getTipoMassa())
                 .plataformaOrigem(optional.get().getPlataformaOrigem())
@@ -83,12 +85,9 @@ public class MassaDadosService {
                 .qtdCurtidas(optional.get().getQtdCurtidas())
                 .build();
 
-        List<MassaDadosEmocaoEntity> massaDadosEmocaoEntity = massaDadosEmocaoService.findByMassaDados(massaDados.getId());
-        List<EmocoesEntity> emocoes = emocoesService.findAllById(massaDadosEmocaoEntity);
-        List<String> nomeEmocoes = emocoes.stream()
-                .map(e -> e.getNomeEmocao())
-                .collect(Collectors.toList());
-        return new MassaDadosResponse(massaDados, nomeEmocoes);
+        List<String> emocoes = emocoesService.findAllById(id);
+
+        return new MassaDadosResponse(massaDados, emocoes);
     }
 
 }

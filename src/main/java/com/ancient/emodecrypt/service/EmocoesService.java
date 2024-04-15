@@ -25,18 +25,15 @@ public class EmocoesService {
         emocoesRepository.save( EmocoesEntity.builder().nomeEmocao(emocao).build());
     }
 
-    public List<EmocoesEntity> findAllById(List<MassaDadosEmocaoEntity> massaDadosEmocaoEntity) {
-        List<Long> idEmocao = new ArrayList<>();
-        massaDadosEmocaoEntity.forEach(mde -> idEmocao.add(mde.getEmocoes().getId()));
-
-        return emocoesRepository.findAllById(idEmocao);
+    public List<String> findAllById(Long id) {
+        return emocoesRepository.findEmocaoByMassaDados(id);
     }
 
     public List<EmocoesEntity> findAllByNomeEmocao(List<String> emocoes) {
         List<EmocoesEntity> list = new ArrayList<>();
         for (String emocao : emocoes) {
             List<EmocoesEntity> byNomeEmocao = emocoesRepository.findByNomeEmocao(emocao);
-            list.addAll(byNomeEmocao); // Adiciona todos os elementos da lista byNomeEmocao à lista list
+            list.addAll(byNomeEmocao);
         }
         return list;
     }

@@ -24,6 +24,10 @@ public class MassaDadosController {
 
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable Long id){
-        return ResponseEntity.ok().body(massaDadosService.findById(id));
+        var massaDados = massaDadosService.findById(id);
+        System.out.println("TESTE: "+massaDados);
+        if (massaDados == null)
+            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(massaDados);
     }
 }

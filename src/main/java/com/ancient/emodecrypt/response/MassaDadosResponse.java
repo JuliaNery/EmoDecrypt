@@ -18,6 +18,6 @@ public record MassaDadosResponse(
 ) {
     public MassaDadosResponse(MassaDadosEntity massaDados, List<String> emocoes) {
         this(massaDados.getId(), massaDados.getNome(), massaDados.getComentario(), massaDados.getPalavrasChaves(),
-              emocoes,  massaDados.getNivelSatisfacao(), massaDados.getQtdCurtidas(), massaDados.getPlataformaOrigem(), massaDados.getTipoMassa(), massaDados.getEmpresa());
+                emocoes,  massaDados.getNivelSatisfacao(), massaDados.getQtdCurtidas(), massaDados.getPlataformaOrigem(), massaDados.getTipoMassa(), massaDados.getEmpresa());
     }
 }

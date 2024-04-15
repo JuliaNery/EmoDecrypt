@@ -12,7 +12,7 @@ import java.util.List;
 public interface MassaDadosEmocaoRepository extends JpaRepository<MassaDadosEmocaoEntity, Long> {
     @Query(value = """
             select * from MassaDadosEmocaoEntity mde
-            where massaDados = :massaDados 
+            where massaDados = :massaDados
             """, nativeQuery = true)
     List<MassaDadosEmocaoEntity> findByMassaDados(@Param("massaDados") Long massaDados);
 }
