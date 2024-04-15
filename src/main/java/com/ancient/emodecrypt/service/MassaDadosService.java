@@ -6,10 +6,12 @@ import com.ancient.emodecrypt.entity.MassaDadosEntity;
 import com.ancient.emodecrypt.repository.MassaDadosRepository;
 import com.ancient.emodecrypt.request.MassaDadosRequest;
 import com.ancient.emodecrypt.response.MassaDadosResponse;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.ai.openai.OpenAiChatClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,6 +42,8 @@ public class MassaDadosService {
                 .tipoMassa(massaDadosRequest.tipoMassa())
                 .plataformaOrigem(massaDadosRequest.plataformaOrigem())
                 .empresa(massaDadosRequest.empresa())
+                .dataPublicacao(massaDadosRequest.dataPublicacao())
+                .dataCriacao(LocalDate.now())
                 .build();
         massaDadosRepository.save(massaDados);
         massaDadosEmocaoService.save(massaDados, emocoesService.findAllByNomeEmocao(emocoes));
@@ -80,6 +84,8 @@ public class MassaDadosService {
                 .comentario(optional.get().getComentario())
                 .id(optional.get().getId())
                 .nome(optional.get().getNome())
+                .dataCriacao(optional.get().getDataCriacao())
+                .dataPublicacao(optional.get().getDataPublicacao())
                 .qtdCurtidas(optional.get().getQtdCurtidas())
                 .build();
 

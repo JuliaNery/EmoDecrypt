@@ -17,6 +17,7 @@ public class MassaDadosController {
 
     @PostMapping
     public ResponseEntity create(@RequestBody @Valid MassaDadosRequest massaDadosRequest,  UriComponentsBuilder uriBuilder) {
+
         var massaDadosResponse = massaDadosService.create(massaDadosRequest);
         var uri = uriBuilder.path("{id}").buildAndExpand(massaDadosResponse.id()).toUri();
         return ResponseEntity.created(uri).body(massaDadosResponse);

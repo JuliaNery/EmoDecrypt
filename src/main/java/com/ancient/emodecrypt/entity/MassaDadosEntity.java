@@ -1,6 +1,7 @@
 package com.ancient.emodecrypt.entity;
 
 import com.ancient.emodecrypt.request.MassaDadosRequest;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,6 +11,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -29,5 +31,7 @@ public class MassaDadosEntity {
     private String plataformaOrigem;
     private String tipoMassa;
     private String empresa;
+    private LocalDate dataCriacao;
+    private LocalDate dataPublicacao;
 
 }
