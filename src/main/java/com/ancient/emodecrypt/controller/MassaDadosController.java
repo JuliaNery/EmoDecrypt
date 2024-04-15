@@ -23,7 +23,22 @@ public class MassaDadosController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity get(@PathVariable Long id){
-        return ResponseEntity.ok().body(massaDadosService.findById(id));
+    public ResponseEntity getById(@PathVariable Long id){
+        try{
+            return ResponseEntity.ok().body(massaDadosService.findById(id));
+        }catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+
+    @GetMapping
+    public ResponseEntity getAll(){
+        try{
+            return ResponseEntity.ok().body(massaDadosService.findAll());
+        }catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
+
     }
 }
