@@ -1,0 +1,95 @@
+{
+	"info": {
+		"_postman_id": "e8f239e6-3798-4da9-92d5-50dfe6023578",
+		"name": "EmotionDecoder",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30622661"
+	},
+	"item": [
+		{
+			"name": "insert Massa",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"nome\":\"ricardo\",\r\n   \"comentario\":\"No dia 28.02.24 entrei em contato com a empresa Vivo para solicitar a troca da data do vencimento, na ligação a atendente me informou que a partir de Abril/24 a fatura\",\r\n   \"qtdCurtidas\":690,\r\n   \"plataformaOrigem\": \"reclame aqui\",\r\n   \"tipoMassa\":\"publicação\",\r\n   \"empresa\": \"vivo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/MassaDados",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"MassaDados"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "get",
+			"item": [
+				{
+					"name": "get by id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/MassaDados/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"MassaDados",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "get all",
+			"item": [
+				{
+					"name": "http://localhost:8080/MassaDados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/MassaDados",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"MassaDados"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

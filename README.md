@@ -169,8 +169,26 @@ O projeto segue uma arquitetura MVC (Model-View-Controller), onde a lógica de n
 
 ## 🛣️ Endpoints:
 - POST - [http://localhost:8080/MassaDados](http://localhost:8080/MassaDados)
+
+| código | descrição                             |
+  |--------|---------------------------------------|
+  |201| Massa de Dados cadastrada com Sucesso |
+  |400| Verifique os dados de envio           |
+
 - GET - [http://localhost:8080/MassaDados](http://localhost:8080/MassaDados)
+
+| código | descrição                |
+  |--------|--------------------------|
+  | 200    | Lista de Massas de Dados |
+
 - GET - [http://localhost:8080/MassaDados/{id}](http://localhost:8080/MassaDados/{1})
+
+| código | descrição                        |
+  |--------|----------------------------------|
+  | 200    | Categoria cadastrada com Sucesso |
+  | 404    | Massa de dados não encontrada.   |
+  | 400    | Verifique os dados de envio      |
+
 ---
 
 ## 📹 Link do Vídeo de Explicação:
