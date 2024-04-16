@@ -1,12 +1,9 @@
 package com.ancient.emodecrypt.service;
 
-import com.ancient.emodecrypt.entity.EmocoesEntity;
-import com.ancient.emodecrypt.entity.MassaDadosEmocaoEntity;
 import com.ancient.emodecrypt.entity.MassaDadosEntity;
 import com.ancient.emodecrypt.repository.MassaDadosRepository;
 import com.ancient.emodecrypt.request.MassaDadosRequest;
 import com.ancient.emodecrypt.response.MassaDadosResponse;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.ai.openai.OpenAiChatClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
