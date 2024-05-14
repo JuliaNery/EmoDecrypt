@@ -2,6 +2,7 @@ package com.ancient.emodecrypt.response;
 
 import com.ancient.emodecrypt.entity.MassaDadosEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
 import java.util.List;

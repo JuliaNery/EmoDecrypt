@@ -73,9 +73,7 @@ public class MassaDadosService {
     }
 
     public MassaDadosResponse findById(ObjectId id) {
-        System.out.println("\n\n\n"+id+"\n\n\n");
         var optional = massaDadosRepository.findById(id);
-        System.out.println("\n\n\n"+optional+"\n\n\n");
 
         var massaDados = MassaDadosEntity.builder()
                 .tipoMassa(optional.get().getTipoMassa())

@@ -12,5 +12,4 @@ import java.util.Optional;
 @EnableMongoRepositories
 
 public interface MassaDadosRepository extends MongoRepository<MassaDadosEntity, ObjectId> {
-    Optional<MassaDadosEntity> findById(ObjectId id);
 }
