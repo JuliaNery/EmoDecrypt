@@ -10,28 +10,31 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
+@Document(collection = "massa_dados")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
 public class MassaDadosEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Field("_id")
+    private String id;
     private String nome;
     private String comentario;
     private List<String> palavrasChaves;
+    private List<String> emocaoTransmitida;
     private Integer nivelSatisfacao;
     private Integer qtdCurtidas;
     private String plataformaOrigem;
     private String tipoMassa;
     private String empresa;
     private LocalDate dataCriacao;
-    private LocalDate dataPublicacao;
-
+    private LocalDate dataPublicacao;;
 }

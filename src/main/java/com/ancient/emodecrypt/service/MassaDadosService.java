@@ -4,6 +4,7 @@ import com.ancient.emodecrypt.entity.MassaDadosEntity;
 import com.ancient.emodecrypt.repository.MassaDadosRepository;
 import com.ancient.emodecrypt.request.MassaDadosRequest;
 import com.ancient.emodecrypt.response.MassaDadosResponse;
+import org.bson.types.ObjectId;
 import org.springframework.ai.openai.OpenAiChatClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,10 @@ import java.util.stream.Collectors;
 public class MassaDadosService {
     @Autowired
     private MassaDadosRepository massaDadosRepository;
-    @Autowired
-    private MassaDadosEmocaoService massaDadosEmocaoService;
-    @Autowired
-    private EmocoesService emocoesService;
+//    @Autowired
+//    private MassaDadosEmocaoService massaDadosEmocaoService;
+//    @Autowired
+//    private EmocoesService emocoesService;
     @Autowired
     private OpenAiChatClient gpt;
 
@@ -41,10 +42,13 @@ public class MassaDadosService {
                 .empresa(massaDadosRequest.empresa())
                 .dataPublicacao(massaDadosRequest.dataPublicacao())
                 .dataCriacao(LocalDate.now())
+                .emocaoTransmitida(emocoes)
+                .palavrasChaves(palavrasChave)
                 .build();
-        massaDadosRepository.save(massaDados);
-        massaDadosEmocaoService.save(massaDados, emocoesService.findAllByNomeEmocao(emocoes));
-        return new MassaDadosResponse(massaDados, emocoes);
+
+            massaDadosRepository.save(massaDados);
+
+        return new MassaDadosResponse(massaDados);
     }
 
     private List<String> getPalavrasChave(String comentario) {
@@ -64,15 +68,15 @@ public class MassaDadosService {
         String emocao = gpt.call("qual sentimento a mensagem " + comentario + " transmite. retonar apena a lista dos sentimentos");
         List<String> emocoes = new ArrayList<>();
         emocoes.addAll(List.of(emocao.split(", ")));
-        emocoes.stream()
-                .filter(e -> !emocoesService.isExists(e))
-                .forEach(emocoesService::save);
 
         return emocoes;
     }
 
-    public MassaDadosResponse findById(Long id) {
+    public MassaDadosResponse findById(ObjectId id) {
+        System.out.println("\n\n\n"+id+"\n\n\n");
         var optional = massaDadosRepository.findById(id);
+        System.out.println("\n\n\n"+optional+"\n\n\n");
+
         var massaDados = MassaDadosEntity.builder()
                 .tipoMassa(optional.get().getTipoMassa())
                 .plataformaOrigem(optional.get().getPlataformaOrigem())
@@ -84,17 +88,16 @@ public class MassaDadosService {
                 .dataCriacao(optional.get().getDataCriacao())
                 .dataPublicacao(optional.get().getDataPublicacao())
                 .qtdCurtidas(optional.get().getQtdCurtidas())
+                .emocaoTransmitida(optional.get().getEmocaoTransmitida())
+                .palavrasChaves(optional.get().getPalavrasChaves())
                 .build();
-
-        List<String> emocoes = emocoesService.findAllById(id);
-
-        return new MassaDadosResponse(massaDados, emocoes);
+        return new MassaDadosResponse(massaDados);
     }
 
     public List<MassaDadosResponse> findAll() {
         List<MassaDadosEntity> massaDadosEntityList = massaDadosRepository.findAll();
         List<MassaDadosResponse> massaDadosResponse = new ArrayList<>();
-        massaDadosEntityList.stream().map(m -> massaDadosResponse.add(new MassaDadosResponse(m,emocoesService.findAllById(m.getId())))).collect(Collectors.toList());
+        massaDadosEntityList.stream().map(m -> massaDadosResponse.add(new MassaDadosResponse(m))).collect(Collectors.toList());
         return massaDadosResponse;
     }
 }
