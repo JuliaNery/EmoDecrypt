@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n   \"nome\":\"ricardo\",\r\n   \"comentario\":\"No dia 28.02.24 entrei em contato com a empresa Vivo para solicitar a troca da data do vencimento, na ligação a atendente me informou que a partir de Abril/24 a fatura\",\r\n   \"qtdCurtidas\":690,\r\n   \"plataformaOrigem\": \"reclame aqui\",\r\n   \"tipoMassa\":\"publicação\",\r\n   \"empresa\": \"vivo\"\r\n}",
+							"raw": "{\r\n    \"nome\":\"joão silva\",\r\n    \"comentario\":\"Serviço de internet muito lento e atendimento ao cliente péssimo.\",\r\n    \"qtdCurtidas\":120,\r\n    \"plataformaOrigem\": \"facebook\",\r\n    \"tipoMassa\":\"comentário\",\r\n    \"empresa\": \"vivo\",\r\n    \"dataPublicacao\": \"10/05/2024 14:22:00\"\r\n}\r\n\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -24,14 +24,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/MassaDados",
+							"raw": "http://localhost:8080/MassaDados/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"MassaDados"
+								"MassaDados",
+								""
 							]
 						}
 					},
@@ -51,7 +52,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/MassaDados/1",
+							"raw": "http://localhost:8080/MassaDados/6642b5d0eee65a2906818d37",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -59,7 +60,48 @@
 							"port": "8080",
 							"path": [
 								"MassaDados",
-								"1"
+								"6642b5d0eee65a2906818d37"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by nome empresa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/MassaDados/empresa/oi",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"MassaDados",
+								"empresa",
+								"oi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Media Satisfação por empresa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/MassaDados/mediasatisfacaovivo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"MassaDados",
+								"mediasatisfacaovivo"
 							]
 						}
 					},
@@ -71,7 +113,7 @@
 			"name": "get all",
 			"item": [
 				{
-					"name": "http://localhost:8080/MassaDados",
+					"name": "Get all",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -84,6 +126,30 @@
 							"port": "8080",
 							"path": [
 								"MassaDados"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Swagger",
+			"item": [
+				{
+					"name": "Swagger",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/docs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"docs"
 							]
 						}
 					},

@@ -4,24 +4,33 @@ import com.ancient.emodecrypt.entity.MassaDadosEntity;
 import com.ancient.emodecrypt.repository.MassaDadosRepository;
 import com.ancient.emodecrypt.request.MassaDadosRequest;
 import com.ancient.emodecrypt.response.MassaDadosResponse;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.bson.types.ObjectId;
 import org.springframework.ai.openai.OpenAiChatClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationOperation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 public class MassaDadosService {
     @Autowired
     private MassaDadosRepository massaDadosRepository;
-//    @Autowired
-//    private MassaDadosEmocaoService massaDadosEmocaoService;
-//    @Autowired
-//    private EmocoesService emocoesService;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
     @Autowired
     private OpenAiChatClient gpt;
 
@@ -63,7 +72,13 @@ public class MassaDadosService {
         Integer satisfacao = Integer.valueOf(gpt.call("calcule o nivel de satisfação preciso do cliente com base no comentario '" + comentario + "' e nos sentimentos que ele transmite. RETORNAR APENAS O VALOR de 0 a 100"));
         return satisfacao;
     }
-
+    public List<MassaDadosResponse> createAll(List<MassaDadosRequest> massaDadosRequests) {
+        List<MassaDadosResponse> responses = new ArrayList<>();
+        for (MassaDadosRequest request : massaDadosRequests) {
+            responses.add(create(request));
+        }
+        return responses;
+    }
     public List<String> getEmocoes(String comentario){
         String emocao = gpt.call("qual sentimento a mensagem " + comentario + " transmite. retonar apena a lista dos sentimentos");
         List<String> emocoes = new ArrayList<>();
@@ -98,4 +113,42 @@ public class MassaDadosService {
         massaDadosEntityList.stream().map(m -> massaDadosResponse.add(new MassaDadosResponse(m))).collect(Collectors.toList());
         return massaDadosResponse;
     }
+    public List<MassaDadosResponse> getByNomeEmpresa(String empresa) {
+        List<MassaDadosEntity> massaDadosEntityList = massaDadosRepository.findByEmpresa(empresa);
+        List<MassaDadosResponse> massaDadosResponse = new ArrayList<>();
+        massaDadosEntityList.stream().map(m -> massaDadosResponse.add(new MassaDadosResponse(m))).collect(Collectors.toList());
+        return massaDadosResponse;
+    }
+
+    public Double calcularMediaSatisfacao(String empresa) {
+        Aggregation aggregation = Aggregation.newAggregation(
+                Aggregation.match(Criteria.where("empresa").is(empresa)),
+                Aggregation.group("empresa").avg("nivelSatisfacao").as("averageSatisfaction")
+        );
+
+        AggregationResults<Map> result = mongoTemplate.aggregate(aggregation, "massa_dados", Map.class);
+        Double average = (Double) result.getUniqueMappedResult().get("averageSatisfaction");
+
+        return average != null ? BigDecimal.valueOf(average).setScale(2, RoundingMode.HALF_UP).doubleValue() : null;
+    }
+
+//    public List<MassaDadosResponse> createAll(List<MassaDadosRequest> massaDadosRequestList) {
+//        List<MassaDadosEntity> massaDados = massaDadosRequestList.stream()
+//                .map(request -> MassaDadosEntity.builder()
+//                        .empresa(request.empresa())
+//                        .qtdCurtidas(request.qtdCurtidas())
+//                        .tipoMassa(request.tipoMassa())
+//                        .nome(request.nome())
+//                        .plataformaOrigem(request.plataformaOrigem())
+//                        .comentario(request.comentario())
+//                        .dataPublicacao(request.dataPublicacao())
+//                        .build())
+//                .collect(Collectors.toList());
+//        List<MassaDadosEntity> savedEntities = massaDadosRepository.saveAll(massaDados);
+//
+//        return savedEntities.stream()
+//                .map(entity -> new MassaDadosResponse(entity))
+//                .collect(Collectors.toList());
+//    }
+
 }
