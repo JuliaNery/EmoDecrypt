@@ -19,7 +19,7 @@ public class SecurityConfig {
                 auth
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/users").permitAll()
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated()
         );
         http.addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
