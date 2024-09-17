@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
-@Document(collection = "users")
+@Document(collection = "users_password")
 @Data
 @Builder
 @AllArgsConstructor
